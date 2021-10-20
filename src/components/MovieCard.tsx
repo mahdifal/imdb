@@ -4,6 +4,7 @@ import StarRating from "./StarRating";
 import { getMovieById, getCastByMovieId } from "../api/Movie";
 import { useNavigation } from "@react-navigation/core";
 import NumberRating from "./NumberRating";
+import Title from "./Title";
 
 const MovieCard = ({ id }) => {
   const navigation = useNavigation();
@@ -27,7 +28,7 @@ const MovieCard = ({ id }) => {
         <Image style={styles.image} source={{ uri: movie.image_url }} />
       </View>
       <View style={styles.detailes}>
-        <Text style={styles.title}>{movie.title}</Text>
+        <Title title={movie.title} />
         {/* <Text style={styles.normalText}>Actor: {cast.actor}</Text> */}
         <View style={styles.genre}>
           {movie?.gen?.map((item) => (
@@ -75,11 +76,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     overflow: "hidden",
     width: "100%",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
   },
   normalText: {
     marginBottom: 10,

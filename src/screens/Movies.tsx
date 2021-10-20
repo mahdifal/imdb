@@ -8,7 +8,11 @@ const renderMovieCard = ({ item }) => <MovieCard id={item.imdb_id} />;
 function Movies() {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
-    getUpcomingMovies().then((response) => setMovies(response.results));
+    const unsubscribe = getUpcomingMovies().then((response) =>
+      setMovies(response.results)
+    );
+
+    return () => unsubscribe;
   }, []);
   // console.log("home =>", movies);
   return (

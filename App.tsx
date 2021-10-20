@@ -1,4 +1,5 @@
 import React from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -26,41 +27,50 @@ function Home() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        tabBarOption={{
-          activeTintColor: "crimson",
-          inactiveTintColor: "gray",
-        }}
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let fontName = "";
+    <SafeAreaView style={styles.container}>
+      <NavigationContainer>
+        <Tab.Navigator
+          tabBarOption={{
+            activeTintColor: "crimson",
+            inactiveTintColor: "gray",
+          }}
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let fontName = "";
 
-            if (route.name === "Home") {
-              fontName = focused ? "videocam" : "videocam-outline";
-            }
-            if (route.name === "Series") {
-              fontName = focused ? "film" : "film-outline";
-            }
-            if (route.name === "Actors") {
-              fontName = focused ? "man" : "man-outline";
-            }
-            return <Ionicons name={fontName} color={color} size={size} />;
-          },
-        })}
-      >
-        <Tab.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={Home}
-        />
-        <Tab.Screen
-          options={{ headerShown: false }}
-          name="Series"
-          component={Series}
-        />
-        <Tab.Screen name="Actors" component={Actors} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              if (route.name === "Home") {
+                fontName = focused ? "videocam" : "videocam-outline";
+              }
+              if (route.name === "Series") {
+                fontName = focused ? "film" : "film-outline";
+              }
+              if (route.name === "Actors") {
+                fontName = focused ? "man" : "man-outline";
+              }
+              return <Ionicons name={fontName} color={color} size={size} />;
+            },
+          })}
+        >
+          <Tab.Screen
+            options={{ headerShown: false }}
+            name="Home"
+            component={Home}
+          />
+          <Tab.Screen
+            options={{ headerShown: false }}
+            name="Series"
+            component={Series}
+          />
+          <Tab.Screen name="Actors" component={Actors} />
+        </Tab.Navigator>
+        {/* <StatusBar style="auto" /> */}
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
