@@ -1,12 +1,28 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "./src/screens/Home";
 import Series from "./src/screens/Series";
 import Actors from "./src/screens/Actors";
+import Movies from "./src/screens/Movies";
+import SingleMovie from "./src/screens/SingleMovie";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
+const HomeNavigator = createNativeStackNavigator();
+
+function Home() {
+  return (
+    <HomeNavigator.Navigator>
+      <HomeNavigator.Screen
+        options={{ headerShown: false }}
+        name="Movies"
+        component={Movies}
+      />
+      <HomeNavigator.Screen name="SingleMovie" component={SingleMovie} />
+    </HomeNavigator.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -33,7 +49,11 @@ export default function App() {
           },
         })}
       >
-        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={Home}
+        />
         <Tab.Screen name="Series" component={Series} />
         <Tab.Screen name="Actors" component={Actors} />
       </Tab.Navigator>
