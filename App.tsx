@@ -54,7 +54,11 @@ export default function App() {
           name="Home"
           component={Home}
         />
-        <Tab.Screen name="Series" component={Series} />
+        <Tab.Screen
+          options={{ headerShown: false }}
+          name="Series"
+          component={Series}
+        />
         <Tab.Screen name="Actors" component={Actors} />
       </Tab.Navigator>
     </NavigationContainer>
