@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 import { getUpcomingMovies } from "../api/Movie";
 import MovieCard from "../components/MovieCard";
 
@@ -14,19 +14,21 @@ function Movies() {
 
     return () => unsubscribe;
   }, []);
-  // console.log("home =>", movies);
+
   return (
-    <FlatList
-      data={movies}
-      keyExtractor={(item) => item.imdb_id}
-      renderItem={renderMovieCard}
-      initialNumToRender={6}
-      getItemLayout={(data, index) => ({
-        length: 150,
-        offset: 150 * index,
-        index,
-      })}
-    />
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList
+        data={movies}
+        keyExtractor={(item) => item.imdb_id}
+        renderItem={renderMovieCard}
+        initialNumToRender={6}
+        getItemLayout={(data, index) => ({
+          length: 150,
+          offset: 150 * index,
+          index,
+        })}
+      />
+    </SafeAreaView>
   );
 }
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -8,6 +7,7 @@ import Actors from "./src/screens/Actors";
 import Movies from "./src/screens/Movies";
 import SingleMovie from "./src/screens/SingleMovie";
 import { Ionicons } from "@expo/vector-icons";
+import Screen from "./src/components/Screen";
 
 const Tab = createBottomTabNavigator();
 const HomeNavigator = createNativeStackNavigator();
@@ -27,7 +27,7 @@ function Home() {
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
+    <Screen>
       <NavigationContainer>
         <Tab.Navigator
           tabBarOption={{
@@ -63,14 +63,7 @@ export default function App() {
           />
           <Tab.Screen name="Actors" component={Actors} />
         </Tab.Navigator>
-        {/* <StatusBar style="auto" /> */}
       </NavigationContainer>
-    </SafeAreaView>
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
