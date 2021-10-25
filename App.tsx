@@ -20,7 +20,11 @@ function Home() {
         name="Movies"
         component={Movies}
       />
-      <HomeNavigator.Screen name="SingleMovie" component={SingleMovie} />
+      <HomeNavigator.Screen
+        options={{ headerShown: false }}
+        name="SingleMovie"
+        component={SingleMovie}
+      />
     </HomeNavigator.Navigator>
   );
 }

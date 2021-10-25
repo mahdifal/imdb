@@ -5,6 +5,7 @@ import { getMovieById, getCastByMovieId } from "../api/Movie";
 import { useNavigation } from "@react-navigation/core";
 import NumberRating from "./NumberRating";
 import Title from "./Title";
+import Genre from "./Genre";
 
 const MovieCard = ({ id }) => {
   const navigation = useNavigation();
@@ -30,15 +31,7 @@ const MovieCard = ({ id }) => {
       <View style={styles.detailes}>
         <Title title={movie.title} />
         {/* <Text style={styles.normalText}>Actor: {cast.actor}</Text> */}
-        <View style={styles.genre}>
-          {movie?.gen?.map((item) => (
-            <Text style={styles.badge} key={item.id}>
-              {item.genre}
-            </Text>
-          ))}
-          {/* <Text style={styles.badge}>action</Text>
-          <Text style={styles.badge}>drama</Text> */}
-        </View>
+        <Genre movie={movie} />
         <View style={styles.rateContainer}>
           <NumberRating rate={movie.rating} />
           <StarRating scorePercent={(movie.rating / 10) * 100} totalScore={5} />
@@ -75,22 +68,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginVertical: 10,
     overflow: "hidden",
-    width: "100%",
+    flex: 1,
   },
   normalText: {
     marginBottom: 10,
-  },
-  genre: {
-    flexDirection: "row",
-  },
-  badge: {
-    borderRadius: 3,
-    borderWidth: 1,
-    paddingHorizontal: 3,
-    alignSelf: "flex-start",
-    margin: 3,
-    color: "#bcbcbc",
-    borderColor: "#bcbcbc",
   },
   rateContainer: {
     flexDirection: "row",
