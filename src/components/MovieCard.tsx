@@ -7,17 +7,17 @@ import NumberRating from "./NumberRating";
 import Title from "./Title";
 import Genre from "./Genre";
 
-const MovieCard = ({ id }) => {
+const MovieCard = ({ movie }) => {
   const navigation = useNavigation();
 
-  const [movie, setMovie] = useState([]);
-  const [cast, setCast] = useState([]);
+  // const [movie, setMovie] = useState([]);
+  // const [cast, setCast] = useState([]);
 
-  useEffect(() => {
-    getMovieById(id).then((response) => setMovie(response.results));
-    getCastByMovieId(id).then((response) => setCast(response));
-  }, [id]);
-
+  // useEffect(() => {
+  //   getMovieById(id).then((response) => setMovie(response.results));
+  //   getCastByMovieId(id).then((response) => setCast(response));
+  // }, [id]);
+  console.log(movie);
   if (!movie) return null;
 
   return (
@@ -26,15 +26,18 @@ const MovieCard = ({ id }) => {
       style={[styles.container, styles.shadow]}
     >
       <View>
-        <Image style={styles.image} source={{ uri: movie.image_url }} />
+        <Image style={styles.image} source={{ uri: movie.poster }} />
       </View>
       <View style={styles.detailes}>
         <Title title={movie.title} />
         {/* <Text style={styles.normalText}>Actor: {cast.actor}</Text> */}
-        <Genre movie={movie} />
+        <Genre movie={movie.genres} />
         <View style={styles.rateContainer}>
           <NumberRating rate={movie.rating} />
-          <StarRating scorePercent={(movie.rating / 10) * 100} totalScore={5} />
+          <StarRating
+            scorePercent={(movie.imdb_rating / 10) * 100}
+            totalScore={5}
+          />
         </View>
       </View>
     </Pressable>

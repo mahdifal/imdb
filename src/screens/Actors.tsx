@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, FlatList } from "react-native";
 import { getActorIdByName } from "../api/Actors";
+import { debounce } from "../utils/helper";
 
 const renderActor = ({ item }) => <Text>{item.name}</Text>;
 
@@ -12,11 +13,15 @@ const Actors = () => {
     getActorIdByName(needle).then((response) => setActor(response.results));
   }, [needle]);
 
+  console.log(actor);
+
+  const delaySearch = (name) => debounce(setNeedle(name), 1500);
+
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.search}
-        onChangeText={(text) => setNeedle(text)}
+        onChangeText={(name) => delaySearch(name)}
       />
       <View style={styles.result}>
         <FlatList

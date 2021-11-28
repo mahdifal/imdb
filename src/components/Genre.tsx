@@ -5,9 +5,9 @@ import { colors } from "../utils/colors";
 export default function Genre({ movie }) {
   return (
     <View style={styles.genre}>
-      {movie?.gen?.map((item) => (
+      {movie?.map((item) => (
         <Text style={styles.badge} key={item.id}>
-          {item.genre}
+          {item}
         </Text>
       ))}
     </View>

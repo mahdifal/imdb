@@ -5,14 +5,14 @@ import { getUpcomingMovies } from "../api/Movie";
 import MovieCard from "../components/MovieCard";
 import { spacing } from "../utils/sizes";
 
-const renderMovieCard = ({ item }) => <MovieCard id={item.imdb_id} />;
+const renderMovieCard = ({ item }) => <MovieCard movie={item} />;
 
 function Movies() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const unsubscribe = getUpcomingMovies().then((response) =>
-      setMovies(response.results)
+      setMovies(response.data)
     );
 
     return () => unsubscribe;
@@ -21,7 +21,7 @@ function Movies() {
   return (
     <FlatList
       data={movies}
-      keyExtractor={(item) => item.imdb_id}
+      keyExtractor={(item) => item.id}
       renderItem={renderMovieCard}
       // initialNumToRender={6}
       contentContainerStyle={{

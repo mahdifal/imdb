@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList } from "react-native";
-import { getSeriesByGenre } from "../api/Movie";
+import { getGenreMovieById } from "../api/Movie";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 
-const renderSeries = ({ item }) => <Thumbnail id={item.imdb_id} />;
+const rendermovie = ({ item }) => <Thumbnail id={item.id} movie={item} />;
 
-export default function SeriesList({ genre }) {
-  const [series, setSeries] = useState([]);
+export default function movieList({ genre }) {
+  const [movie, setmovie] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = getSeriesByGenre(genre).then((response) =>
-      setSeries(response.results)
+    const unsubscribe = getGenreMovieById(genre.id).then((response) =>
+      setmovie(response.data)
     );
 
     return () => unsubscribe;
   }, [genre]);
 
-  if (!series) return null;
+  if (!movie) return null;
 
   return (
     <View>
-      <Title title={genre} />
+      <Title title={genre.name} />
       <FlatList
-        data={series}
-        keyExtractor={(item) => item.imdb_id}
-        renderItem={renderSeries}
+        data={movie}
+        keyExtractor={(item) => item.id}
+        renderItem={rendermovie}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       />
