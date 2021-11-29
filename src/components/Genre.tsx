@@ -6,7 +6,7 @@ export default function Genre({ movie }) {
   return (
     <View style={styles.genre}>
       {movie?.map((item) => (
-        <Text style={styles.badge} key={item.id}>
+        <Text style={styles.badge} key={item}>
           {item}
         </Text>
       ))}

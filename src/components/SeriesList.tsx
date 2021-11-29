@@ -24,7 +24,7 @@ export default function movieList({ genre }) {
       <Title title={genre.name} />
       <FlatList
         data={movie}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={rendermovie}
         horizontal={true}
         showsHorizontalScrollIndicator={false}

@@ -21,7 +21,7 @@ function Movies() {
   return (
     <FlatList
       data={movies}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={renderMovieCard}
       // initialNumToRender={6}
       contentContainerStyle={{
