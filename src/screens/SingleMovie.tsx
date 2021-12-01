@@ -12,8 +12,9 @@ import { getMovieById } from "../api/Movie";
 import Genre from "../components/Genre";
 import { fontSize, spacing } from "../utils/sizes";
 import { colors } from "../utils/colors";
+import ImageGallery from "../components/ImageGallery";
 
-const HEADER_MAX_HEIGHT = 500;
+const HEADER_MAX_HEIGHT = 600;
 const HEADER_MIN_HEIGHT = 50;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
@@ -24,11 +25,9 @@ function App() {
   const [movie, setMovie] = useState([]);
 
   useEffect(() => {
-    getMovieById(route?.params?.id).then((response) =>
-      setMovie(response.results)
-    );
+    getMovieById(route?.params?.id).then((response) => setMovie(response));
   }, [route?.params?.id]);
-  // console.log(movie);
+
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const headerTranslateY = scrollY.interpolate({
@@ -62,13 +61,41 @@ function App() {
   const renderListItem = (item) => (
     <View style={styles.details}>
       <Text style={styles.name}>{movie.title}</Text>
-      <Genre movie={movie} />
-      <Text style={styles.year}>Year: {movie.year}</Text>
-      <Text style={styles.rating}>Rating: {movie.rating}</Text>
-      <Text style={styles.description}>Description:</Text>
-      <Text style={styles.description}>{movie.description}</Text>
+      <Genre movie={movie?.genres} />
+      <View style={styles.titleBox}>
+        <Text style={styles.mainTitle}>Year:</Text>
+        <Text style={styles.subTitle}>{movie.year}</Text>
+      </View>
+      <View style={styles.titleBox}>
+        <Text style={styles.mainTitle}>Rating:</Text>
+        <Text style={styles.subTitle}>{movie.imdb_rating}</Text>
+      </View>
+      <View style={styles.titleBox}>
+        <Text style={styles.mainTitle}>Released:</Text>
+        <Text style={styles.subTitle}>{movie.released}</Text>
+      </View>
+      <View style={styles.titleBox}>
+        <Text style={styles.mainTitle}>Runtime:</Text>
+        <Text style={styles.subTitle}>{movie.runtime}</Text>
+      </View>
+      <View style={styles.titleBox}>
+        <Text style={styles.mainTitle}>Country:</Text>
+        <Text style={styles.subTitle}>{movie.country}</Text>
+      </View>
+      <View style={styles.titleBox}>
+        <Text style={styles.mainTitle}>Director:</Text>
+        <Text style={styles.subTitle}>{movie.director}</Text>
+      </View>
+      <Text style={styles.mainTitle}>Writer: </Text>
+      <Text style={styles.subTitle}>{movie.writer}</Text>
+
+      <Text style={styles.mainTitle}>Actors:</Text>
+      <Text style={styles.subTitle}>{movie.actors}</Text>
+      <Text style={styles.mainTitle}>Awards:</Text>
+      <Text style={styles.subTitle}>{movie.awards}</Text>
     </View>
   );
+  console.log(movie);
 
   return (
     <SafeAreaView style={styles.saveArea}>
@@ -81,6 +108,7 @@ function App() {
         )}
       >
         {renderListItem()}
+        <ImageGallery movie={movie} />
       </Animated.ScrollView>
       <Animated.View
         style={[
@@ -96,7 +124,7 @@ function App() {
               transform: [{ translateY: imageTranslateY }],
             },
           ]}
-          source={{ uri: movie.banner }}
+          source={{ uri: movie.poster }}
         />
       </Animated.View>
       <Animated.View
@@ -107,7 +135,7 @@ function App() {
           },
         ]}
       >
-        <Text style={styles.title}>{movie.title}</Text>
+        {/* <Text style={styles.title}>{movie.title}</Text> */}
       </Animated.View>
     </SafeAreaView>
   );
@@ -186,9 +214,31 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     marginTop: 40,
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
-  year: {
+  titleBox: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  mainTitle: {
     fontSize: fontSize.md,
+    color: colors.coolGray,
+  },
+  subTitle: {
+    fontSize: fontSize.md,
+    color: colors.gray,
+    marginLeft: 10,
   },
   rating: {
     fontSize: fontSize.md,

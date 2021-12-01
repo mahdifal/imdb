@@ -10,19 +10,11 @@ import Genre from "./Genre";
 const MovieCard = ({ movie }) => {
   const navigation = useNavigation();
 
-  // const [movie, setMovie] = useState([]);
-  // const [cast, setCast] = useState([]);
-
-  // useEffect(() => {
-  //   getMovieById(id).then((response) => setMovie(response.results));
-  //   getCastByMovieId(id).then((response) => setCast(response));
-  // }, [id]);
-  console.log(movie);
   if (!movie) return null;
 
   return (
     <Pressable
-      onPress={() => navigation.navigate("SingleMovie", { id })}
+      onPress={() => navigation.navigate("SingleMovie", { id: movie.id })}
       style={[styles.container, styles.shadow]}
     >
       <View>

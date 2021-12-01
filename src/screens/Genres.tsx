@@ -10,7 +10,7 @@ const Series = () => {
     getSeriesByGenre().then((res) => setGenre(res));
   }, []);
 
-  console.log(genre);
+  // console.log(genre);
 
   return (
     <ScrollView style={styles.container}>
