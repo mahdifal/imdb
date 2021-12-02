@@ -1,38 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import { getSeriesByImdbId } from "../api/Series";
-import NumberRating from "./NumberRating";
-import StarRating from "./StarRating";
+import { useNavigation } from "@react-navigation/core";
 
 export default function Thumbnail({ movie }) {
-  // const [serie, setSerie] = useState([]);
+  const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   const unsubscribe = getSeriesByImdbId(id).then((response) =>
-  //     setSerie(response.results)
-  //   );
-
-  //   return () => unsubscribe;
-  // }, [id]);
-
-  // if (!serie) return null;
+  if (!movie) return null;
 
   return (
-    <Pressable style={styles.container}>
+    <Pressable
+      onPress={() => navigation.navigate("SingleMovie", { id: movie.id })}
+    >
       <Image style={styles.banner} source={{ uri: movie.poster }} />
-      <View style={styles.rateContainer}>
-        {/* <View>
-          <NumberRating rate={movie.imdb_rating} />
-        </View> */}
-        {/* <StarRating scorePercent={(movie.rating / 10) * 100} totalScore={5} /> */}
-        <Text>{movie.title}</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>{movie.title}</Text>
       </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  rateContainer: {
+  container: {
     flexDirection: "row",
     width: 102,
   },
@@ -41,5 +29,8 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 8,
     margin: 5,
+  },
+  title: {
+    marginLeft: 8,
   },
 });

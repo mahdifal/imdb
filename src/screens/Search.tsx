@@ -1,30 +1,39 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, TextInput, StyleSheet, FlatList } from "react-native";
-import { getActorIdByName } from "../api/Actors";
+import { View, TextInput, StyleSheet, FlatList } from "react-native";
+import { getMovieByName } from "../api/Search";
+import ActivityIndicator from "../components/ActivityIndicator";
 import MovieCard from "../components/MovieCard";
+import useApi from "../hooks/useApi";
 import { colors } from "../utils/colors";
 import { debounce } from "../utils/helper";
 
-// const renderActor = ({ item }) => <Text>  {item.title}</Text>;
-const renderActor = ({ item }) => <MovieCard movie={item} />;
+const renderMovie = ({ item }) => <MovieCard movie={item} />;
 
-const Actors = () => {
-  const [needle, setNeedle] = useState("");
-  const [actor, setActor] = useState([]);
+const SearchMovie = () => {
+  const [search, setSearch] = useState("");
 
-  const handleCallAPI = () =>
-    getActorIdByName(needle).then((response) => setActor(response.data));
+  const {
+    data: movie,
+    error,
+    loading,
+    request: loadMovieByName,
+  } = useApi(getMovieByName);
 
-  const delayedQuery = useCallback(debounce(handleCallAPI, 1500), [needle]);
+  const handleCallAPI = () => loadMovieByName(search);
+
+  const delayedQuery = useCallback(debounce(handleCallAPI, 1200), [search]);
 
   const onChange = (name) => {
-    setNeedle(name);
+    setSearch(name);
     delayedQuery();
   };
+
+  if (loading) return <ActivityIndicator visible={true} />;
 
   return (
     <View style={styles.container}>
       <TextInput
+        defaultValue={search}
         style={styles.search}
         onChangeText={(name) => onChange(name)}
         placeholder="Enter Name of a Movie..."
@@ -32,9 +41,9 @@ const Actors = () => {
       />
       <View style={styles.result}>
         <FlatList
-          data={actor}
+          data={movie.data}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={renderActor}
+          renderItem={renderMovie}
         />
       </View>
     </View>
@@ -44,13 +53,8 @@ const Actors = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // marginHorizontal: 10,
-    // marginTop: 10,
   },
   search: {
-    // width: "100%",
     marginHorizontal: 10,
     padding: 5,
     height: 40,
@@ -62,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Actors;
+export default SearchMovie;

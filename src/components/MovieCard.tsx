@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+import React from "react";
+import { View, Image, StyleSheet, Pressable } from "react-native";
 import StarRating from "./StarRating";
-import { getMovieById, getCastByMovieId } from "../api/Movie";
 import { useNavigation } from "@react-navigation/core";
 import NumberRating from "./NumberRating";
 import Title from "./Title";

@@ -13,6 +13,8 @@ import Genre from "../components/Genre";
 import { fontSize, spacing } from "../utils/sizes";
 import { colors } from "../utils/colors";
 import ImageGallery from "../components/ImageGallery";
+import ActivityIndicator from "../components/ActivityIndicator";
+import useApi from "../hooks/useApi";
 
 const HEADER_MAX_HEIGHT = 600;
 const HEADER_MIN_HEIGHT = 50;
@@ -22,10 +24,16 @@ function App() {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const [movie, setMovie] = useState([]);
+  // const [movie, setMovie] = useState([]);
+  const {
+    data: movie,
+    error,
+    loading,
+    request: loadMovieById,
+  } = useApi(getMovieById);
 
   useEffect(() => {
-    getMovieById(route?.params?.id).then((response) => setMovie(response));
+    loadMovieById(route?.params?.id);
   }, [route?.params?.id]);
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -95,7 +103,6 @@ function App() {
       <Text style={styles.subTitle}>{movie.awards}</Text>
     </View>
   );
-  console.log(movie);
 
   return (
     <SafeAreaView style={styles.saveArea}>
@@ -127,6 +134,7 @@ function App() {
           source={{ uri: movie.poster }}
         />
       </Animated.View>
+      <ActivityIndicator visible={loading} />
       <Animated.View
         style={[
           styles.topBar,

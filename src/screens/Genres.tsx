@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import SeriesList from "../components/SeriesList";
-import { getSeriesByGenre } from "../api/Movie";
+import GenresList from "../components/GenresList";
+import { getMoiveByGenre } from "../api/Genre";
+import useApi from "../hooks/useApi";
+import ActivityIndicator from "../components/ActivityIndicator";
 
-const Series = () => {
-  const [genre, setGenre] = useState([]);
+const Genre = () => {
+  const {
+    data: genre,
+    error,
+    loading,
+    request: loadMovieByGenre,
+  } = useApi(getMoiveByGenre);
 
   useEffect(() => {
-    getSeriesByGenre().then((res) => setGenre(res));
+    loadMovieByGenre();
   }, []);
 
-  // console.log(genre);
+  if (loading) return <ActivityIndicator visible={loading} />;
 
   return (
     <ScrollView style={styles.container}>
       {genre?.map((item) => (
-        <SeriesList genre={item} key={item.id} />
+        <GenresList genre={item} key={item.id} />
       ))}
-      {/* <SeriesList genre="Drama" />
-      <SeriesList genre="Family" />
-      <SeriesList genre="Fantasy" />
-      <SeriesList genre="Comedy" />
-      <SeriesList genre="Romance" />
-      <SeriesList genre="Horror" /> */}
     </ScrollView>
   );
 };
@@ -33,4 +34,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Series;
+export default Genre;
