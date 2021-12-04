@@ -7,7 +7,7 @@ import {
   Text,
   Animated,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { getMovieById } from "../api/Movie";
 import Genre from "../components/Genre";
 import { fontSize, spacing } from "../utils/sizes";
@@ -21,10 +21,8 @@ const HEADER_MIN_HEIGHT = 50;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 function App() {
-  const navigation = useNavigation();
   const route = useRoute();
 
-  // const [movie, setMovie] = useState([]);
   const {
     data: movie,
     error,

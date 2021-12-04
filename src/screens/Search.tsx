@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   search: {
-    marginHorizontal: 10,
+    margin: 10,
     padding: 5,
     height: 40,
     borderRadius: 5,
