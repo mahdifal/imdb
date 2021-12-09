@@ -1,26 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Image,
-  View,
-  Text,
-  Animated,
-} from "react-native";
+import React, { useEffect, useContext, useRef } from "react";
+import { SafeAreaView, Animated } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { getMovieById } from "../api/Movie";
-import Genre from "../components/Genre";
-import { fontSize, spacing } from "../utils/sizes";
-import { colors } from "../utils/colors";
 import ImageGallery from "../components/ImageGallery";
 import ActivityIndicator from "../components/ActivityIndicator";
 import useApi from "../hooks/useApi";
+import { lightStyles, darkStyles } from "./Styles/SingleMovie";
+import SingleMovie from "../components/SingleMovie";
+import AppContext from "../state/AppContext";
 
 const HEADER_MAX_HEIGHT = 600;
 const HEADER_MIN_HEIGHT = 50;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 function App() {
+  const { theme } = useContext(AppContext);
   const route = useRoute();
 
   const {
@@ -64,46 +58,12 @@ function App() {
     extrapolate: "clamp",
   });
 
-  const renderListItem = (item) => (
-    <View style={styles.details}>
-      <Text style={styles.name}>{movie.title}</Text>
-      <Genre movie={movie?.genres} />
-      <View style={styles.titleBox}>
-        <Text style={styles.mainTitle}>Year:</Text>
-        <Text style={styles.subTitle}>{movie.year}</Text>
-      </View>
-      <View style={styles.titleBox}>
-        <Text style={styles.mainTitle}>Rating:</Text>
-        <Text style={styles.subTitle}>{movie.imdb_rating}</Text>
-      </View>
-      <View style={styles.titleBox}>
-        <Text style={styles.mainTitle}>Released:</Text>
-        <Text style={styles.subTitle}>{movie.released}</Text>
-      </View>
-      <View style={styles.titleBox}>
-        <Text style={styles.mainTitle}>Runtime:</Text>
-        <Text style={styles.subTitle}>{movie.runtime}</Text>
-      </View>
-      <View style={styles.titleBox}>
-        <Text style={styles.mainTitle}>Country:</Text>
-        <Text style={styles.subTitle}>{movie.country}</Text>
-      </View>
-      <View style={styles.titleBox}>
-        <Text style={styles.mainTitle}>Director:</Text>
-        <Text style={styles.subTitle}>{movie.director}</Text>
-      </View>
-      <Text style={styles.mainTitle}>Writer: </Text>
-      <Text style={styles.subTitle}>{movie.writer}</Text>
-
-      <Text style={styles.mainTitle}>Actors:</Text>
-      <Text style={styles.subTitle}>{movie.actors}</Text>
-      <Text style={styles.mainTitle}>Awards:</Text>
-      <Text style={styles.subTitle}>{movie.awards}</Text>
-    </View>
-  );
+  const renderListItem = (item) => <SingleMovie movie={movie} theme={theme} />;
 
   return (
-    <SafeAreaView style={styles.saveArea}>
+    <SafeAreaView
+      style={[theme === "dark" ? darkStyles.saveArea : lightStyles.saveArea]}
+    >
       <Animated.ScrollView
         contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT - 32 }}
         scrollEventThrottle={16}
@@ -117,13 +77,15 @@ function App() {
       </Animated.ScrollView>
       <Animated.View
         style={[
-          styles.header,
+          theme === "dark" ? darkStyles.header : lightStyles.header,
           { transform: [{ translateY: headerTranslateY }] },
         ]}
       >
         <Animated.Image
           style={[
-            styles.headerBackground,
+            theme === "dark"
+              ? darkStyles.headerBackground
+              : lightStyles.headerBackground,
             {
               opacity: imageOpacity,
               transform: [{ translateY: imageTranslateY }],
@@ -135,7 +97,7 @@ function App() {
       <ActivityIndicator visible={loading} />
       <Animated.View
         style={[
-          styles.topBar,
+          theme === "dark" ? darkStyles.topBar : lightStyles.topBar,
           {
             transform: [{ scale: titleScale }, { translateY: titleTranslateY }],
           },
@@ -146,113 +108,5 @@ function App() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  saveArea: {
-    flex: 1,
-    backgroundColor: "#eff3fb",
-  },
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    shadowColor: "#402583",
-    backgroundColor: "#ffffff",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 1,
-    borderRadius: 10,
-    marginHorizontal: 12,
-    marginTop: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  header: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "#62d1bc",
-    overflow: "hidden",
-    height: HEADER_MAX_HEIGHT,
-  },
-  headerBackground: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    width: null,
-    height: HEADER_MAX_HEIGHT,
-    resizeMode: "cover",
-  },
-  topBar: {
-    marginTop: 40,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-  },
-  title: {
-    color: colors.lemon,
-    fontSize: fontSize.xl,
-  },
-  avatar: {
-    height: 54,
-    width: 54,
-    resizeMode: "contain",
-    borderRadius: 54 / 2,
-  },
-  fullNameText: {
-    fontSize: 16,
-    marginLeft: 24,
-  },
-  name: {
-    fontSize: fontSize.xl,
-    color: colors.darkGreen,
-  },
-  details: {
-    flex: 1,
-    margin: 10,
-    marginTop: 40,
-    padding: 10,
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
-  },
-  titleBox: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  mainTitle: {
-    fontSize: fontSize.md,
-    color: colors.coolGray,
-  },
-  subTitle: {
-    fontSize: fontSize.md,
-    color: colors.gray,
-    marginLeft: 10,
-  },
-  rating: {
-    fontSize: fontSize.md,
-    color: colors.lightOrange,
-  },
-  description: {
-    fontSize: fontSize.md,
-  },
-});
 
 export default App;

@@ -12,25 +12,28 @@ const { width, height } = Dimensions.get("screen");
 
 export default function ImageGallery({ movie }) {
   if (!movie?.images) {
-    return <Text>Loading...</Text>;
+    return <Text></Text>;
   }
+
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={movie.images}
-        keyExtractor={(item) => item}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => {
-          return (
-            <View style={styles.itemStyle}>
-              <Image source={{ uri: item }} style={styles.imageStyle} />
-            </View>
-          );
-        }}
-      />
-    </View>
+    movie?.images && (
+      <View style={styles.container}>
+        <FlatList
+          data={movie.images}
+          keyExtractor={(item) => item}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return (
+              <View style={styles.itemStyle}>
+                <Image source={{ uri: item }} style={styles.imageStyle} />
+              </View>
+            );
+          }}
+        />
+      </View>
+    )
   );
 }
 

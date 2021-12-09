@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { View, FlatList } from "react-native";
+import React, { useEffect, useContext } from "react";
+import { View, FlatList, StyleSheet } from "react-native";
 import { getGenreMovieById } from "../api/Genre";
 import useApi from "../hooks/useApi";
+import AppContext from "../state/AppContext";
+import { colors } from "../utils/colors";
 import ActivityIndicator from "./ActivityIndicator";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
@@ -9,6 +11,8 @@ import Title from "./Title";
 const rendermovie = ({ item }) => <Thumbnail id={item.id} movie={item} />;
 
 export default function movieList({ genre }) {
+  const { theme } = useContext(AppContext);
+
   const {
     data: movie,
     error,
@@ -16,19 +20,22 @@ export default function movieList({ genre }) {
     request: loadGenreMovieById,
   } = useApi(getGenreMovieById);
 
-  // const load = React.useCallback(loadGenreMovieById(genre.id), []);
   useEffect(() => {
     loadGenreMovieById(genre.id);
-    // load();
   }, []);
 
   if (!movie) return null;
-  // console.log(movie);
 
   return (
-    <View>
+    <View
+      style={[
+        theme === "dark"
+          ? styles.container
+          : { ...styles.container, backgroundColor: colors.white },
+      ]}
+    >
       <ActivityIndicator visible={loading} />
-      <Title title={genre.name} />
+      <Title theme={theme} title={genre.name} />
       <FlatList
         data={movie.data}
         keyExtractor={(item) => item.id.toString()}
@@ -39,3 +46,11 @@ export default function movieList({ genre }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "rgba(56,56,56,0.9)",
+    paddingHorizontal: 10,
+  },
+});

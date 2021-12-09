@@ -1,4 +1,4 @@
 import client from "./api";
 
-export const getMovieByName = (name: string) =>
-  client.get(`movies?q=${name}&page=1`);
+export const getMovieByName = (name: string, page: string) =>
+  client.get(`movies?q=${name}&page=${page}`);
