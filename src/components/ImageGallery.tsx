@@ -12,7 +12,7 @@ const { width, height } = Dimensions.get("screen");
 
 export default function ImageGallery({ movie }) {
   if (!movie?.images) {
-    return <Text></Text>;
+    return <Text />;
   }
 
   return (

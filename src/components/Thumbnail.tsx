@@ -9,7 +9,9 @@ export default function Thumbnail({ movie }) {
 
   const navigation = useNavigation();
 
-  if (!movie) return null;
+  if (!movie) {
+    return null;
+  }
 
   return (
     <Pressable

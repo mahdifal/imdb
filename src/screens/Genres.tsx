@@ -17,7 +17,9 @@ const Genre = () => {
     loadMovieByGenre();
   }, []);
 
-  if (loading) return <ActivityIndicator visible={loading} />;
+  if (loading) {
+    return <ActivityIndicator visible={loading} />;
+  }
 
   return (
     <ScrollView>

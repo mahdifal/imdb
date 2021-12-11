@@ -24,7 +24,9 @@ export default function movieList({ genre }) {
     loadGenreMovieById(genre.id);
   }, []);
 
-  if (!movie) return null;
+  if (!movie) {
+    return null;
+  }
 
   return (
     <View

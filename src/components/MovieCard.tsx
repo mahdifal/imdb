@@ -13,7 +13,9 @@ const MovieCard = ({ movie }) => {
 
   const { theme } = useContext(AppContext);
 
-  if (!movie) return null;
+  if (!movie) {
+    return null;
+  }
 
   return (
     <Pressable
