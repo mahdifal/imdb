@@ -1,10 +1,10 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Screen from "./src/components/Screen";
-import AppNavigator from "./src/navigation/AppNavigator";
 import { useNetInfo } from "@react-native-community/netinfo";
 import AppState from "./src/state/AppStateProvider";
 import Offline from "./src/screens/Offline";
+import InitNavigator from "./src/navigation/InitNavigator";
 
 export default function App() {
   const netInfo = useNetInfo();
@@ -16,7 +16,7 @@ export default function App() {
           <Offline />
         ) : (
           <NavigationContainer>
-            <AppNavigator />
+            <InitNavigator />
           </NavigationContainer>
         )}
       </AppState>

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { getGenreMovieById } from "../api/Genre";
 import useApi from "../hooks/useApi";
 import AppContext from "../state/AppContext";
@@ -24,8 +24,8 @@ export default function movieList({ genre }) {
     loadGenreMovieById(genre.id);
   }, []);
 
-  if (!movie) {
-    return null;
+  if (error) {
+    return <Text>A Error has Accord.</Text>;
   }
 
   return (

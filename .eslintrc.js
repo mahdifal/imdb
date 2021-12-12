@@ -21,5 +21,7 @@ module.exports = {
   plugins: ["react", "@typescript-eslint"],
   rules: {
     quotes: [2, "double", { avoidEscape: true }],
+    "react-hooks/rules-of-hooks": "off",
+    "react-hooks/exhaustive-deps": "off",
   },
 };
