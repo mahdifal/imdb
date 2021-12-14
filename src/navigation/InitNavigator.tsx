@@ -3,7 +3,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Splash from "../screens/Splash";
 import App from "./AppNavigator";
 
-const InitNav = createNativeStackNavigator();
+type RootStackParamList = {
+  Splash: undefined;
+  App: undefined;
+};
+
+const InitNav = createNativeStackNavigator<RootStackParamList>();
 
 export default function InitNavigator() {
   return (

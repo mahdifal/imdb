@@ -3,13 +3,31 @@ import { Text, View } from "react-native";
 import Genre from "./Genre";
 import { lightStyles, darkStyles } from "./Styles/SingleMovie";
 
-export default function SingleMovie({ movie, theme }) {
+type SingleMovieProps = {
+  movie: {
+    title: string;
+    genres: string;
+    year: string;
+    imdb_rating: string;
+    released: string;
+    runtime: string;
+    country: string;
+    director: string;
+    writer: string;
+    actors: string;
+    awards: string;
+  };
+  // movies: [];
+  theme: "dark" | "light";
+};
+
+export default function SingleMovie({ movie, theme }: SingleMovieProps) {
   return (
     <View style={[theme === "dark" ? darkStyles.details : lightStyles.details]}>
       <Text style={[theme === "dark" ? darkStyles.name : lightStyles.name]}>
         {movie.title}
       </Text>
-      <Genre movie={movie?.genres} theme={theme} />
+      <Genre movies={movie?.genres} theme={theme} />
       <View
         style={[theme === "dark" ? darkStyles.titleBox : lightStyles.titleBox]}
       >

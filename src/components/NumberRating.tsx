@@ -1,7 +1,11 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 
-export default function NumberRating({ rate }) {
+type RatingProps = {
+  rate: string;
+};
+
+export default function NumberRating({ rate }: RatingProps) {
   return <Text style={styles.rate}>{rate}</Text>;
 }
 

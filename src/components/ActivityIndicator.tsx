@@ -2,7 +2,11 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import LottieView from "lottie-react-native";
 
-export default function ActivityIndicator({ visible = false }) {
+type Props = {
+  visible: boolean;
+};
+
+export default function ActivityIndicator({ visible = false }: Props) {
   if (!visible) {
     return null;
   }

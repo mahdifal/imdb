@@ -1,8 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { colors } from "../utils/colors";
 
-export default function Title({ title, theme }) {
+type TitleProps = {
+  title: string;
+  theme: "dark" | "light";
+};
+
+export default function Title({ title, theme }: TitleProps) {
   return (
     <Text
       style={[

@@ -23,5 +23,6 @@ module.exports = {
     quotes: [2, "double", { avoidEscape: true }],
     "react-hooks/rules-of-hooks": "off",
     "react-hooks/exhaustive-deps": "off",
+    "@typescript-eslint/ban-types": "off",
   },
 };

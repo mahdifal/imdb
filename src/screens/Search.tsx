@@ -7,6 +7,7 @@ import { colors } from "../utils/colors";
 import { debounce } from "../utils/helper";
 import { lightStyles, darkStyles } from "../components/Styles/Search";
 import AppContext from "../state/AppContext";
+import Error from "../components/Error";
 
 const renderMovie = ({ item }) => <MovieCard movie={item} />;
 
@@ -18,17 +19,12 @@ const SearchMovie = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState([]);
 
-  const {
-    // data: movie,
-    error,
-    loading,
-    request: loadMovieByName,
-  } = useApi(getMovieByName);
+  const { error, loading, request: loadMovieByName } = useApi(getMovieByName);
 
   const handleCallAPI = () =>
-    loadMovieByName(search, currentPage).then((res) =>
-      setData([...data, ...res.data.data])
-    );
+    loadMovieByName(search, currentPage).then((res) => {
+      setData([...data, ...res.data.data]);
+    });
 
   const delayedQuery = useCallback(debounce(handleCallAPI, 1000), [
     search,
@@ -41,8 +37,10 @@ const SearchMovie = () => {
   };
 
   const handleLoadMore = () => {
+    console.log("end of screen =>", currentPage);
+
     setCurrentPage(currentPage + 1);
-    // delayedQuery();
+    delayedQuery();
   };
 
   const renderLoader = () => {
@@ -56,14 +54,14 @@ const SearchMovie = () => {
       </View>
     ) : null;
   };
-  // console.log("search =>", search, data.length, currentPage);
 
-  // if (loading) return <ActivityIndicator visible={true} />;
+  console.log("data =>", data?.length, "page =>", currentPage);
 
   return (
     <View
       style={[theme === "dark" ? darkStyles.container : lightStyles.container]}
     >
+      {error && <Error loadFunc={handleCallAPI} />}
       <TextInput
         defaultValue={search}
         style={[
@@ -75,12 +73,16 @@ const SearchMovie = () => {
       />
       <View style={[theme === "dark" ? darkStyles.result : lightStyles.result]}>
         <FlatList
+          style={{ height: "100%" }}
           data={data}
           keyExtractor={(item, index) => String(index)}
           renderItem={renderMovie}
           onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.5}
+          onEndReachedThreshold={0.25}
+          // pagingEnabled
           ListFooterComponent={renderLoader}
+          // onMomentumScrollEnd={(e) => delayedQuery()}
+          windowSize={5}
         />
       </View>
     </View>

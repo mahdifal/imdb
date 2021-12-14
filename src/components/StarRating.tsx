@@ -1,14 +1,22 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const StarRating = ({ style, scorePercent, totalScore = 5 }) => {
+type StarRatingProps = {
+  style: {};
+  scorePercent: number;
+  totalScore: number;
+};
+
+const StarRating = ({
+  style,
+  scorePercent,
+  totalScore = 5,
+}: StarRatingProps) => {
   let stars = "";
 
   for (let i = 0; i < totalScore; i++) {
     stars += "★";
   }
-
-  // const scorePercent = (score / totalScore) * 100;
 
   return (
     <View style={[styles.container, style]}>

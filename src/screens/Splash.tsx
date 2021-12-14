@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/core";
 
 export default function Splash() {
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);

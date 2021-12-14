@@ -4,7 +4,15 @@ import { useNavigation } from "@react-navigation/core";
 import AppContext from "../state/AppContext";
 import { darkStyles, lightStyles } from "./Styles/Thumbnail";
 
-export default function Thumbnail({ movie }) {
+type ThumbnailProps = {
+  movie: {
+    id: string;
+    poster: string;
+    title: string;
+  };
+};
+
+export default function Thumbnail({ movie }: ThumbnailProps) {
   const { theme } = useContext(AppContext);
 
   const navigation = useNavigation();
@@ -15,7 +23,9 @@ export default function Thumbnail({ movie }) {
 
   return (
     <Pressable
-      onPress={() => navigation.navigate("SingleMovie", { id: movie.id })}
+      onPress={() =>
+        navigation.navigate("SingleMovie" as never, { id: movie.id } as never)
+      }
     >
       <Image
         style={[theme === "dark" ? darkStyles.banner : lightStyles.banner]}

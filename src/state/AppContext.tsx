@@ -1,5 +1,9 @@
 import { createContext } from "react";
 
-const AppStateContext = createContext();
+interface ContextState {
+  theme: string | null;
+}
+
+const AppStateContext = createContext({} as ContextState);
 
 export default AppStateContext;

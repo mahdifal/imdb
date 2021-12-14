@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, Image, StyleSheet, Pressable } from "react-native";
+import { View, Image, Pressable } from "react-native";
 import StarRating from "./StarRating";
 import { useNavigation } from "@react-navigation/core";
 import NumberRating from "./NumberRating";
@@ -8,7 +8,19 @@ import Genre from "./Genre";
 import AppContext from "../state/AppContext";
 import { darkStyle, lightStyle } from "./Styles/MovieCard";
 
-const MovieCard = ({ movie }) => {
+type MovieCardProps = {
+  // movie: string[];
+  movie: {
+    id: string;
+    poster: string;
+    title: string;
+    genres: [];
+    rating: string;
+    imdb_rating: number;
+  };
+};
+
+const MovieCard = ({ movie }: MovieCardProps) => {
   const navigation = useNavigation();
 
   const { theme } = useContext(AppContext);
@@ -19,7 +31,9 @@ const MovieCard = ({ movie }) => {
 
   return (
     <Pressable
-      onPress={() => navigation.navigate("SingleMovie", { id: movie.id })}
+      onPress={() =>
+        navigation.navigate("SingleMovie" as never, { id: movie.id })
+      }
       style={[
         theme === "dark" ? darkStyle.container : lightStyle.container,
         theme === "dark" ? darkStyle.shadow : lightStyle.shadow,

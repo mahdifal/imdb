@@ -1,8 +1,13 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Constants from "expo-constants";
 import { StyleSheet, SafeAreaView, View } from "react-native";
 
-function Screen({ children, style }) {
+type ScreenProps = {
+  children: ReactElement;
+  style: {};
+};
+
+function Screen({ children, style }: ScreenProps) {
   return (
     <SafeAreaView style={[styles.screen, style]}>
       <View style={[styles.view, style]}>{children}</View>

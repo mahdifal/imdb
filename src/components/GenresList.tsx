@@ -1,16 +1,33 @@
 import React, { useEffect, useContext } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { getGenreMovieById } from "../api/Genre";
 import useApi from "../hooks/useApi";
 import AppContext from "../state/AppContext";
 import { colors } from "../utils/colors";
 import ActivityIndicator from "./ActivityIndicator";
+import Error from "./Error";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 
-const rendermovie = ({ item }) => <Thumbnail id={item.id} movie={item} />;
+type GenresListProps = {
+  genre: {
+    id: string;
+    name: string;
+  };
+};
 
-export default function movieList({ genre }) {
+type RenderMovieProps = {
+  item: {
+    id: string[];
+    movie: string[];
+  };
+};
+
+const rendermovie = ({ item }: RenderMovieProps) => (
+  <Thumbnail id={item.id} movie={item} />
+);
+
+export default function GenresList({ genre }: GenresListProps) {
   const { theme } = useContext(AppContext);
 
   const {
@@ -24,10 +41,6 @@ export default function movieList({ genre }) {
     loadGenreMovieById(genre.id);
   }, []);
 
-  if (error) {
-    return <Text>A Error has Accord.</Text>;
-  }
-
   return (
     <View
       style={[
@@ -36,6 +49,7 @@ export default function movieList({ genre }) {
           : { ...styles.container, backgroundColor: colors.white },
       ]}
     >
+      {error && <Error loadFunc={() => loadGenreMovieById(genre.id)} />}
       <ActivityIndicator visible={loading} />
       <Title theme={theme} title={genre.name} />
       <FlatList

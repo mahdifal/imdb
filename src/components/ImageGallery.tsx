@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   View,
   Text,
@@ -8,18 +8,22 @@ import {
   StyleSheet,
 } from "react-native";
 
-const { width, height } = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 
-export default function ImageGallery({ movie }) {
-  if (!movie?.images) {
+type ImageGalleryProps = {
+  images: string[];
+};
+
+export default function ImageGallery({ images }: ImageGalleryProps) {
+  if (!images) {
     return <Text />;
   }
 
   return (
-    movie?.images && (
+    images && (
       <View style={styles.container}>
         <FlatList
-          data={movie.images}
+          data={images}
           keyExtractor={(item) => item}
           horizontal
           pagingEnabled

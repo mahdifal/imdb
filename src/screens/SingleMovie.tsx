@@ -8,14 +8,42 @@ import useApi from "../hooks/useApi";
 import { lightStyles, darkStyles } from "./Styles/SingleMovie";
 import SingleMovie from "../components/SingleMovie";
 import AppContext from "../state/AppContext";
+import Error from "../components/Error";
 
 const HEADER_MAX_HEIGHT = 600;
 const HEADER_MIN_HEIGHT = 50;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-function App() {
+type SingleRouteProp = Props["route"];
+
+type SingleMovieProps = {};
+
+type RenderSingleMovieProps = {
+  theme: "dark" | "light";
+  movie: {
+    title: string;
+    genres: string;
+    year: string;
+    imdb_rating: string;
+    released: string;
+    runtime: string;
+    country: string;
+    director: string;
+    writer: string;
+    actors: string;
+    awards: string;
+    poster: string;
+    images: string[];
+  };
+};
+
+const renderSingleMovie = ({ movie, theme }: RenderSingleMovieProps) => (
+  <SingleMovie movie={movie} theme={theme} />
+);
+
+const SingleMovieScreen: React.FC<RenderSingleMovieProps> = () => {
   const { theme } = useContext(AppContext);
-  const route = useRoute();
+  const route = useRoute<SingleRouteProp>();
 
   const {
     data: movie,
@@ -58,12 +86,11 @@ function App() {
     extrapolate: "clamp",
   });
 
-  const renderListItem = (item) => <SingleMovie movie={movie} theme={theme} />;
-
   return (
     <SafeAreaView
       style={[theme === "dark" ? darkStyles.saveArea : lightStyles.saveArea]}
     >
+      {error && <Error loadFunc={loadMovieById(route?.params?.id)} />}
       <Animated.ScrollView
         contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT - 32 }}
         scrollEventThrottle={16}
@@ -72,8 +99,8 @@ function App() {
           { useNativeDriver: true }
         )}
       >
-        {renderListItem()}
-        <ImageGallery movie={movie} />
+        {renderSingleMovie({ movie, theme })}
+        <ImageGallery images={movie.images} />
       </Animated.ScrollView>
       <Animated.View
         style={[
@@ -107,6 +134,6 @@ function App() {
       </Animated.View>
     </SafeAreaView>
   );
-}
+};
 
-export default App;
+export default SingleMovieScreen;

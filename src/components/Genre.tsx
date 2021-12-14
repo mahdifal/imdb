@@ -2,10 +2,15 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../utils/colors";
 
-export default function Genre({ movie, theme }) {
+type Props = {
+  movies: [];
+  theme: "dark" | "light";
+};
+
+export default function Genre({ movies, theme }: Props) {
   return (
     <View style={styles.genre}>
-      {movie?.map((item) => (
+      {movies?.map((item) => (
         <Text
           style={[
             theme === "dark"

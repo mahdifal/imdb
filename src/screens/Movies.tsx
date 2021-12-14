@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState, useContext } from "react";
 import { FlatList, View, StyleSheet, ActivityIndicator } from "react-native";
 import { getMovies } from "../api/Movie";
+import Error from "../components/Error";
 import MovieCard from "../components/MovieCard";
 import useApi from "../hooks/useApi";
 import AppContext from "../state/AppContext";
@@ -12,18 +13,19 @@ const renderMovieCard = ({ item }) => <MovieCard movie={item} />;
 
 function Movies() {
   const { theme } = useContext(AppContext);
-  const {
-    // data: movies,
-    error,
-    loading,
-    request: loadMovies,
-  } = useApi(getMovies);
+  const { error, loading, request: loadMovies } = useApi(getMovies);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [data, setData] = useState([]);
 
+  const ApiLoadMovie = () =>
+    loadMovies(currentPage).then((res) => {
+      setData([...data, ...res.data.data]);
+    });
+
   useEffect(() => {
-    loadMovies(currentPage).then((res) => setData([...data, ...res.data.data]));
+    // loadMovies(currentPage).then((res) => setData([...data, ...res.data.data]));
+    loadMovies(currentPage).then((res) => console.log(res.data));
   }, [currentPage]);
 
   const handleLoadMore = () => {
@@ -46,24 +48,19 @@ function Movies() {
           : { ...styles.container, backgroundColor: colors.white },
       ]}
     >
+      {error && <Error loadFunc={loadMovies(currentPage)} />}
       <FlatList
         data={data}
         keyExtractor={(item, index) => String(index)}
         renderItem={renderMovieCard}
-        initialNumToRender={5}
         onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.01}
         ListFooterComponent={renderLoader}
         // removeClippedSubviews={true}
         contentContainerStyle={{
           padding: spacing.sm,
           paddingTop: StatusBar.currentHeight,
         }}
-        getItemLayout={(data, index) => ({
-          length: 150,
-          offset: 150 * index,
-          index,
-        })}
       />
     </View>
   );
@@ -75,7 +72,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightGray,
   },
   loaderStyle: {
-    // marginVertical: 16,
     alignItems: "center",
   },
 });

@@ -11,11 +11,9 @@ const Tab = createBottomTabNavigator();
 export default function AppNavigator() {
   return (
     <Tab.Navigator
-      tabBarOption={{
-        activeTintColor: "crimson",
-        inactiveTintColor: "gray",
-      }}
       screenOptions={({ route }) => ({
+        tabBarActiveTintColor: "crimson",
+        tabBarInactiveTintColor: "gray",
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Home") {
             return focused ? (
