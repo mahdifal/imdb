@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { colors } from "../utils/colors";
 
 type StarRatingProps = {
-  style: {};
+  style?: {};
   scorePercent: number;
   totalScore: number;
 };
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
   },
   score: {
     position: "absolute",
-    color: "red",
+    color: colors.red,
   },
 });
 

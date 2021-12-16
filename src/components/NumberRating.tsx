@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
+import { colors } from "../utils/colors";
 
 type RatingProps = {
   rate: string;
@@ -11,7 +12,7 @@ export default function NumberRating({ rate }: RatingProps) {
 
 const styles = StyleSheet.create({
   rate: {
-    color: "#ff8c00",
+    color: colors.darkOrange,
     fontWeight: "bold",
   },
 });

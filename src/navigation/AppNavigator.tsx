@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Genres from "../screens/Genres";
 import Search from "../screens/Search";
 import Movie from "./MovieNavigator";
+import { colors } from "../utils/colors";
 
 const Tab = createBottomTabNavigator();
 
@@ -12,8 +13,8 @@ export default function AppNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: "crimson",
-        tabBarInactiveTintColor: "gray",
+        tabBarActiveTintColor: colors.darkOrange,
+        tabBarInactiveTintColor: colors.gray,
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Home") {
             return focused ? (

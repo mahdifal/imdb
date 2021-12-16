@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
+import { spacing } from "../../utils/sizes";
 
 export const lightStyles = StyleSheet.create({
   container: {
@@ -9,11 +10,11 @@ export const lightStyles = StyleSheet.create({
   banner: {
     width: 102,
     height: 150,
-    borderRadius: 8,
+    borderRadius: spacing.sm,
     margin: 5,
   },
   title: {
-    marginLeft: 8,
+    marginLeft: spacing.sm,
     color: colors.black,
   },
 });
@@ -26,7 +27,7 @@ export const darkStyles = StyleSheet.create({
   banner: {
     width: 102,
     height: 150,
-    borderRadius: 8,
+    borderRadius: spacing.sm,
     margin: 5,
   },
   title: {

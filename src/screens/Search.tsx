@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from "react";
-import { View, TextInput, FlatList, ActivityIndicator } from "react-native";
+import { View, TextInput, FlatList } from "react-native";
 import { getMovieByName } from "../api/Search";
 import MovieCard from "../components/MovieCard";
 import useApi from "../hooks/useApi";
@@ -14,48 +14,23 @@ const renderMovie = ({ item }) => <MovieCard movie={item} />;
 const SearchMovie = () => {
   const { theme } = useContext(AppContext);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<[]>([]);
 
-  const { error, loading, request: loadMovieByName } = useApi(getMovieByName);
+  const { error, request: loadMovieByName } = useApi(getMovieByName);
 
   const handleCallAPI = () =>
-    loadMovieByName(search, currentPage).then((res) => {
-      setData([...data, ...res.data.data]);
+    loadMovieByName(search).then((res) => {
+      setData(res.data.data);
     });
 
-  const delayedQuery = useCallback(debounce(handleCallAPI, 1000), [
-    search,
-    currentPage,
-  ]);
+  const delayedQuery = useCallback(debounce(handleCallAPI, 1000), [search]);
 
-  const onChange = (name) => {
+  const onChange = (name: string) => {
     setSearch(name);
     delayedQuery();
   };
-
-  const handleLoadMore = () => {
-    console.log("end of screen =>", currentPage);
-
-    setCurrentPage(currentPage + 1);
-    delayedQuery();
-  };
-
-  const renderLoader = () => {
-    return loading ? (
-      <View
-        style={[
-          theme === "dark" ? darkStyles.loaderStyle : lightStyles.loaderStyle,
-        ]}
-      >
-        <ActivityIndicator size="large" color="#aaa" />
-      </View>
-    ) : null;
-  };
-
-  console.log("data =>", data?.length, "page =>", currentPage);
 
   return (
     <View
@@ -73,16 +48,9 @@ const SearchMovie = () => {
       />
       <View style={[theme === "dark" ? darkStyles.result : lightStyles.result]}>
         <FlatList
-          style={{ height: "100%" }}
           data={data}
-          keyExtractor={(item, index) => String(index)}
+          keyExtractor={(_, index) => String(index)}
           renderItem={renderMovie}
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.25}
-          // pagingEnabled
-          ListFooterComponent={renderLoader}
-          // onMomentumScrollEnd={(e) => delayedQuery()}
-          windowSize={5}
         />
       </View>
     </View>

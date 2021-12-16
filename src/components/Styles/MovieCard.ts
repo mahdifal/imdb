@@ -1,16 +1,17 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
+import { fontSize } from "../../utils/sizes";
 
 export const lightStyle = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderRadius: 8,
     margin: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.white,
   },
   shadow: {
     elevation: 20,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 10,
@@ -21,8 +22,8 @@ export const lightStyle = StyleSheet.create({
   image: {
     width: 100,
     height: 152,
-    borderBottomLeftRadius: 8,
-    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: fontSize.sm,
+    borderTopLeftRadius: fontSize.sm,
   },
   detailes: {
     marginLeft: 20,
@@ -37,6 +38,13 @@ export const lightStyle = StyleSheet.create({
   rateContainer: {
     flexDirection: "row",
     marginTop: 10,
+  },
+  yearContainer: {
+    flexDirection: "row",
+    marginTop: 5,
+  },
+  yearText: {
+    color: colors.darkSplash,
   },
 });
 
@@ -76,5 +84,12 @@ export const darkStyle = StyleSheet.create({
   rateContainer: {
     flexDirection: "row",
     marginTop: 10,
+  },
+  yearContainer: {
+    flexDirection: "row",
+    marginTop: 5,
+  },
+  yearText: {
+    color: colors.lightGray,
   },
 });

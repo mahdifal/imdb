@@ -1,9 +1,7 @@
-import { ApiResponse } from "apisauce";
 import * as React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
 type ErrorProps = {
-  // loadFunc: Promise<ApiResponse<unknown, unknown>>;
   loadFunc: () => Promise<any>;
 };
 

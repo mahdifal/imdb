@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
+import { spacing } from "../../utils/sizes";
 
 export const lightStyles = StyleSheet.create({
   container: {
@@ -10,13 +11,15 @@ export const lightStyles = StyleSheet.create({
     padding: 5,
     height: 40,
     borderRadius: 5,
-    borderWidth: 1,
+    borderWidth: 2,
+    borderColor: colors.lightGray,
+    color: colors.darkSplash,
   },
   result: {
     flex: 1,
   },
   loaderStyle: {
-    marginVertical: 16,
+    marginVertical: spacing.md,
     alignItems: "center",
   },
 });
@@ -39,7 +42,7 @@ export const darkStyles = StyleSheet.create({
     flex: 1,
   },
   loaderStyle: {
-    marginVertical: 16,
+    marginVertical: spacing.md,
     alignItems: "center",
   },
 });

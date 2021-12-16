@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, Image, Pressable } from "react-native";
+import { View, Image, Text, Pressable } from "react-native";
 import StarRating from "./StarRating";
 import { useNavigation } from "@react-navigation/core";
 import NumberRating from "./NumberRating";
@@ -9,7 +9,6 @@ import AppContext from "../state/AppContext";
 import { darkStyle, lightStyle } from "./Styles/MovieCard";
 
 type MovieCardProps = {
-  // movie: string[];
   movie: {
     id: string;
     poster: string;
@@ -17,6 +16,7 @@ type MovieCardProps = {
     genres: [];
     rating: string;
     imdb_rating: number;
+    year: string;
   };
 };
 
@@ -47,7 +47,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
       </View>
       <View style={theme === "dark" ? darkStyle.detailes : lightStyle.detailes}>
         <Title theme={theme} title={movie.title} />
-        <Genre theme={theme} movie={movie.genres} />
+        <Genre theme={theme} movies={movie.genres} />
         <View
           style={
             theme === "dark"
@@ -60,6 +60,21 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             scorePercent={(movie.imdb_rating / 10) * 100}
             totalScore={5}
           />
+        </View>
+        <View
+          style={[
+            theme === "dark"
+              ? darkStyle.yearContainer
+              : lightStyle.yearContainer,
+          ]}
+        >
+          <Text
+            style={[
+              theme === "dark" ? darkStyle.yearText : lightStyle.yearText,
+            ]}
+          >
+            Year: {movie.year}
+          </Text>
         </View>
       </View>
     </Pressable>

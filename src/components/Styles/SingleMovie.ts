@@ -12,9 +12,9 @@ export const lightStyles = StyleSheet.create({
     margin: 10,
     marginTop: 40,
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     borderRadius: 5,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -49,10 +49,9 @@ export const darkStyles = StyleSheet.create({
     margin: 10,
     marginTop: 40,
     padding: 10,
-    // backgroundColor: "#fff",
     backgroundColor: "rgba(56,56,56,0.9)",
     borderRadius: 5,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2,

@@ -4,7 +4,7 @@ import { StyleSheet, SafeAreaView, View } from "react-native";
 
 type ScreenProps = {
   children: ReactElement;
-  style: {};
+  style?: {};
 };
 
 function Screen({ children, style }: ScreenProps) {

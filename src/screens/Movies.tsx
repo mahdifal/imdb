@@ -18,14 +18,8 @@ function Movies() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [data, setData] = useState([]);
 
-  const ApiLoadMovie = () =>
-    loadMovies(currentPage).then((res) => {
-      setData([...data, ...res.data.data]);
-    });
-
   useEffect(() => {
-    // loadMovies(currentPage).then((res) => setData([...data, ...res.data.data]));
-    loadMovies(currentPage).then((res) => console.log(res.data));
+    loadMovies(currentPage).then((res) => setData([...data, ...res.data.data]));
   }, [currentPage]);
 
   const handleLoadMore = () => {
@@ -35,7 +29,7 @@ function Movies() {
   const renderLoader = () => {
     return loading ? (
       <View style={styles.loaderStyle}>
-        <ActivityIndicator size="large" color="#aaa" />
+        <ActivityIndicator size="large" color={colors.lightGray} />
       </View>
     ) : null;
   };
@@ -51,12 +45,11 @@ function Movies() {
       {error && <Error loadFunc={loadMovies(currentPage)} />}
       <FlatList
         data={data}
-        keyExtractor={(item, index) => String(index)}
+        keyExtractor={(_, index) => String(index)}
         renderItem={renderMovieCard}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.01}
         ListFooterComponent={renderLoader}
-        // removeClippedSubviews={true}
         contentContainerStyle={{
           padding: spacing.sm,
           paddingTop: StatusBar.currentHeight,

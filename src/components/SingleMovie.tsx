@@ -17,7 +17,7 @@ type SingleMovieProps = {
     actors: string;
     awards: string;
   };
-  // movies: [];
+  movies: [];
   theme: "dark" | "light";
 };
 

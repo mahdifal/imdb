@@ -16,8 +16,6 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 type SingleRouteProp = Props["route"];
 
-type SingleMovieProps = {};
-
 type RenderSingleMovieProps = {
   theme: "dark" | "light";
   movie: {

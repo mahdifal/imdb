@@ -1,21 +1,19 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
-import { fontSize } from "../../utils/sizes";
+import { fontSize, spacing } from "../../utils/sizes";
 
 const HEADER_MAX_HEIGHT = 600;
-const HEADER_MIN_HEIGHT = 50;
-// const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 export const lightStyles = StyleSheet.create({
   saveArea: {
     flex: 1,
-    backgroundColor: "#eff3fb",
+    backgroundColor: colors.smoke,
   },
   card: {
     flexDirection: "row",
     alignItems: "center",
-    shadowColor: "#402583",
-    backgroundColor: "#ffffff",
+    shadowColor: colors.blue,
+    backgroundColor: colors.white,
     shadowOffset: {
       width: 0,
       height: 0,
@@ -26,7 +24,7 @@ export const lightStyles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 12,
     marginTop: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: spacing.md,
     paddingVertical: 12,
   },
   header: {
@@ -34,7 +32,7 @@ export const lightStyles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: "#62d1bc",
+    backgroundColor: colors.lightGray,
     overflow: "hidden",
     height: HEADER_MAX_HEIGHT,
   },
@@ -68,8 +66,8 @@ export const lightStyles = StyleSheet.create({
     borderRadius: 54 / 2,
   },
   fullNameText: {
-    fontSize: 16,
-    marginLeft: 24,
+    fontSize: fontSize.sm,
+    marginLeft: spacing.lg,
   },
   rating: {
     fontSize: fontSize.md,
@@ -88,8 +86,8 @@ export const darkStyles = StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "center",
-    shadowColor: "#402583",
-    backgroundColor: "#ffffff",
+    shadowColor: colors.blue,
+    backgroundColor: colors.white,
     shadowOffset: {
       width: 0,
       height: 0,
@@ -100,7 +98,7 @@ export const darkStyles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 12,
     marginTop: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: spacing.md,
     paddingVertical: 12,
   },
   header: {
@@ -108,7 +106,7 @@ export const darkStyles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: "#62d1bc",
+    backgroundColor: colors.lightGray,
     overflow: "hidden",
     height: HEADER_MAX_HEIGHT,
   },
@@ -142,8 +140,8 @@ export const darkStyles = StyleSheet.create({
     borderRadius: 54 / 2,
   },
   fullNameText: {
-    fontSize: 16,
-    marginLeft: 24,
+    fontSize: fontSize.md,
+    marginLeft: spacing.lg,
   },
   rating: {
     fontSize: fontSize.md,

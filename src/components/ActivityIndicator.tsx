@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import LottieView from "lottie-react-native";
+import { colors } from "../utils/colors";
 
 type Props = {
   visible: boolean;
@@ -25,7 +26,7 @@ export default function ActivityIndicator({ visible = false }: Props) {
 const styles = StyleSheet.create({
   overlay: {
     position: "absolute",
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     height: "100%",
     opacity: 0.8,
     width: "100%",
