@@ -25,12 +25,20 @@ const SearchMovie = () => {
       setData(res.data.data);
     });
 
-  const delayedQuery = useCallback(debounce(handleCallAPI, 1000), [search]);
+  // Method 1 => debounce
+  // const delayedQuery = useCallback(debounce(handleCallAPI, 1000), [search]);
+
+  // Method 2 => useEffect
+  React.useEffect(() => {
+    handleCallAPI();
+  }, [search]);
 
   const onChange = (name: string) => {
     setSearch(name);
-    delayedQuery();
+    // Method 1
+    // delayedQuery();
   };
+  console.log("movie =>", data.length, search);
 
   return (
     <View
